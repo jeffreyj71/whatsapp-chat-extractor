@@ -39,7 +39,7 @@ A local-first tool to export your own WhatsApp messages to JSON/CSV with optiona
 ### 1. Clone / download the project
 
 ```bash
-cd whatsapp-extractor
+cd whatsapp-chat-extractor
 ```
 
 ### 2. Copy environment config
