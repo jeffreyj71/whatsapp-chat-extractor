@@ -1,13 +1,8 @@
 import React from 'react';
-import { api } from '../api/client.js';
 
-export default function ResultsPanel({ jobStatus, jobId, onReset }) {
+export default function ResultsPanel({ jobStatus, onReset }) {
   const failed = jobStatus?.status === 'failed';
   const result = jobStatus?.result || {};
-
-  const handleDownload = () => {
-    window.location.href = api.getDownloadUrl(jobId);
-  };
 
   if (failed) {
     return (
@@ -38,27 +33,17 @@ export default function ResultsPanel({ jobStatus, jobId, onReset }) {
       </div>
 
       <div style={styles.filesInfo}>
-        <p style={styles.filesTitle}>Files written to:</p>
-        <code style={styles.dirPath}>{result.dirName || 'exports/'}</code>
+        <p style={styles.filesTitle}>Your files are saved here:</p>
+        <code style={styles.dirPath}>{result.exportDir || result.dirName || 'exports/'}</code>
         <p style={styles.filesList}>
           messages.json &nbsp;·&nbsp; messages.csv &nbsp;·&nbsp; summary.txt
           {result.mediaDownloaded > 0 && ' · media/'}
         </p>
       </div>
 
-      <div style={styles.btnRow}>
-        <button style={styles.btn} onClick={handleDownload}>
-          ⬇ Download ZIP
-        </button>
-        <button style={styles.btnSecondary} onClick={onReset}>
-          ↩ New Export
-        </button>
-      </div>
-
-      <p style={styles.hint}>
-        The ZIP contains all exported files. You can also find them in the{' '}
-        <code style={styles.inlineCode}>exports/</code> folder inside the project directory.
-      </p>
+      <button style={styles.btn} onClick={onReset}>
+        ↩ Extract Another Chat
+      </button>
     </div>
   );
 }

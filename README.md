@@ -96,7 +96,7 @@ Then open **http://localhost:5173** in your browser.
 6. Choose whether to include media downloads.
 7. Click **Start Extraction**.
 8. Watch the progress panel.
-9. When complete, click **Download ZIP** or **Open Folder** to access your export.
+9. When complete, the full path to your export folder is shown on screen.
 
 ---
 
@@ -125,7 +125,6 @@ exports/
 | GET | /api/chats | List all chats |
 | POST | /api/extract | Start an extraction job |
 | GET | /api/extract/:jobId/status | Job progress |
-| GET | /api/export/:jobId/download | Download export ZIP |
 
 WebSocket: `ws://localhost:3001` — streams `qr`, `status`, and `progress` events.
 

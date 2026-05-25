@@ -18,7 +18,6 @@ export const api = {
   startExtraction: (payload) =>
     apiFetch('/extract', { method: 'POST', body: JSON.stringify(payload) }),
   getJobStatus: (jobId) => apiFetch(`/extract/${jobId}/status`),
-  getDownloadUrl: (jobId) => `/api/export/${jobId}/download`,
 };
 
 /**

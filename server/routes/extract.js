@@ -49,31 +49,5 @@ router.get('/extract/:jobId/status', (req, res) => {
   res.json(job);
 });
 
-// GET /api/export/:jobId/download  — streams the export folder as a ZIP
-router.get('/export/:jobId/download', (req, res) => {
-  const job = jobs.get(req.params.jobId);
-  if (!job) return res.status(404).json({ error: 'Job not found' });
-  if (job.status !== 'done') return res.status(409).json({ error: 'Export not ready', status: job.status });
-
-  const exportDir = job.result?.exportDir;
-  if (!exportDir || !fs.existsSync(exportDir)) {
-    return res.status(404).json({ error: 'Export directory not found' });
-  }
-
-  // Stream as ZIP using built-in archiver pattern via a child process
-  const archiver = require('archiver');
-  const dirName = path.basename(exportDir);
-  res.setHeader('Content-Type', 'application/zip');
-  res.setHeader('Content-Disposition', `attachment; filename="${dirName}.zip"`);
-
-  const archive = archiver.create('zip', { zlib: { level: 6 } });
-  archive.on('error', (err) => {
-    logger.error(`ZIP error: ${err.message}`);
-    res.status(500).end();
-  });
-  archive.pipe(res);
-  archive.directory(exportDir, dirName);
-  archive.finalize();
-});
 
 module.exports = router;

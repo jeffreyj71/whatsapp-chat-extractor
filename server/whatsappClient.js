@@ -66,6 +66,7 @@ async function initClient() {
   });
 
   client.on('loading_screen', (percent, message) => {
+    if (connectionStatus === 'connected') return;
     connectionStatus = 'connecting';
     logger.info(`Loading WhatsApp: ${percent}% — ${message}`);
     broadcast('status', { status: 'connecting', percent, message });
